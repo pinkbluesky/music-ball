@@ -59,12 +59,14 @@ app.post('/update', jsonParser, function (req, res) {
                 console.log('saving to db...');
                 console.log(marker);
                 selectedMarker = marker.name;
+                console.log(selectedMarker);
             }
         }
     });
 
     fs.writeFileSync(db_filename, JSON.stringify(db));
 
+    console.log('selected marker in POST: ' + selectedMarker);
     res.json({ "selectedMarker": selectedMarker });
 });
 

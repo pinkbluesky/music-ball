@@ -1,1 +1,34 @@
-{"markers":[{"name":"kanji","audio":"/audio/undefined.undefined","in_use":true},{"name":"letterA","audio":"/audio/undefined.undefined","in_use":true},{"name":"letterB","audio":"/audio/91658f7758f8c29ac7bada205fd17753.audio/mpeg","in_use":true},{"name":"letterC","audio":"/audio/0c070f5ec97536ef80ee8dd0bee095da.audio/mpeg","in_use":true},{"name":"letterD","audio":"","in_use":false},{"name":"letterF","audio":"","in_use":false},{"name":"letterG","audio":"","in_use":false}]}
+{
+    "markers": [
+        {
+            "name": "kanji",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterA",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterB",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterC",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterD",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterF",
+            "audio": "",
+            "in_use": false
+        }
+    ]
+}

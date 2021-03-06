@@ -80,6 +80,7 @@
                     cache: false
                 }).done(function (data) {
 
+                    console.log('Received data after uploading audio:')
                     console.log(data);
 
                     fetch("/update", {
@@ -88,20 +89,27 @@
                         body: JSON.stringify({
                             filename: data.filename, type: data.type
                         })
-                    }).then(res => {
-                        // display marker
-                        $('img#themarker').attr('src', '/data/' + res.selectedMarker + '.png');
+                    }).then(response => response.json())
+                        .then(data => {
 
-                        document.getElementById("generatorMsg").textContent = "Created! Right-click the marker to download and print.";
+                            console.log('Received data after selecting marker:')
+                            console.log(data)
 
-                        // display db for testing purposes
-                        $.getJSON('/data/db.json', function (db) {
-                            console.log('Final DB: ');
-                            db.markers.forEach(function (marker) {
-                                console.log(marker);
+                            // display marker
+                            $('img#themarker').attr('src', '/data/' + data.selectedMarker + '.png');
+
+                            document.getElementById("generatorMsg").textContent = "Created! Right-click the marker to download and print.";
+
+                            // display db for testing purposes
+                            $.getJSON('/data/db.json', function (db) {
+                                console.log('Final DB: ');
+                                db.markers.forEach(function (marker) {
+                                    console.log(marker);
+                                });
+
                             });
+
                         });
-                    });
                 });
             }
             else {
