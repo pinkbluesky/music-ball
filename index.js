@@ -1,5 +1,10 @@
 var express = require('express');
 var app = express();
+
+var bodyParser = require('body-parser')
+// create application/json parser
+var jsonParser = bodyParser.json()
+
 var path = require('path');
 
 app.use(express.static('public'));
@@ -35,18 +40,20 @@ var storage = multer.diskStorage({
 var fs = require('fs');
 
 // req: filename & type; res: name of the selected marker
-app.post('/update', (req, res) => {
-    var db_filename = '/data/db.json';
+app.post('/update', jsonParser, function (req, res) {
+    var db_filename = './public/data/db.json';
     var db = JSON.parse(fs.readFileSync(db_filename).toString());
 
     let selectedMarker = null;
+
+    console.log(req.body);
 
     db.markers.forEach(function (marker) {
         if (!marker.in_use) {
             // only continue if no marker has been selected
             if (!selectedMarker) {
                 // record filename
-                marker.audio = '/audio/' + req.data.filename + '.' + req.data.type;
+                marker.audio = '/audio/' + req.body.filename + '.' + req.body.type;
                 marker.in_use = true;
 
                 console.log('saving to db...');

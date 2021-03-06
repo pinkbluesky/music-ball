@@ -67,6 +67,8 @@
 
                 const file = fileInput.files[0];
 
+                console.log(file);
+
                 var formData = new FormData();
                 formData.append('audio', file);
                 var request = $.ajax({
@@ -80,17 +82,15 @@
 
                     console.log(data);
 
-                    var request = $.ajax({
-                        url: "/update",
+                    fetch("/update", {
                         method: "POST",
-                        data: { "filename": data.filename, "type": data.type },
-                        contentType: false,
-                        processData: false,
-                        cache: false
-                    }).done(function (db_res) {
-
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            filename: data.filename, type: data.type
+                        })
+                    }).then(res => {
                         // display marker
-                        $('img#themarker').attr('src', '/data/' + db_res.selectedMarker + '.png');
+                        $('img#themarker').attr('src', '/data/' + res.selectedMarker + '.png');
 
                         document.getElementById("generatorMsg").textContent = "Created! Right-click the marker to download and print.";
 
@@ -103,7 +103,6 @@
                         });
                     });
                 });
-
             }
             else {
                 console.log("No audio file received.")
