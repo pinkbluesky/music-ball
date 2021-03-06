@@ -1,0 +1,39 @@
+{
+    "markers": [
+        {
+            "name": "kanji",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterA",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterB",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterC",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterD",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterF",
+            "audio": "",
+            "in_use": false
+        },
+        {
+            "name": "letterG",
+            "audio": "",
+            "in_use": false
+        }
+    ]
+}

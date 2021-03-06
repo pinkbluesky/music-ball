@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Create a Music Ball</title>
+    <script src='/js/three.js'></script>
+    <script src='/js/jquery-3.6.0.js'></script>
+
+    <style>
+        html,
+        body {
+            font-family: 'Saira', sans-serif;
+            font-size: small;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .row {
+            display: block;
+            flex-direction: row;
+            max-width: 1000px;
+        }
+
+        input#thefile {
+            margin: 0px 8px 3px;
+        }
+
+        .marker {}
+    </style>
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+
+    <div class="content">
+        <div class="row">
+            <label for="thefile" class="file"> Choose an audio file
+                <input type="file" id="thefile" accept="audio/*" />
+            </label>
+            <div id="out"></div>
+        </div>
+        <div class="row">
+            <button id="generatorBtn" onclick="generateMarker()">
+                Generate marker
+            </button>
+            <p id="generatorMsg"></p>
+        </div>
+
+        <div class="marker">
+            <img id="themarker" src="" />
+        </div>
+    </div>
+
+    <script>
+
+        function generateMarker() {
+            var fileInput = document.getElementById("thefile");
+            var fileLabel = document.querySelector("label.file");
+            if (fileInput.value != "") {
+
+                console.log("Audio file received.");
+
+                const file = fileInput.files[0];
+
+                var formData = new FormData();
+                formData.append('audio', file);
+                var request = $.ajax({
+                    url: "/upload",
+                    method: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    cache: false
+                }).done(function (data) {
+
+                    console.log(data);
+
+                    var request = $.ajax({
+                        url: "/update",
+                        method: "POST",
+                        data: { "filename": data.filename, "type": data.type },
+                        contentType: false,
+                        processData: false,
+                        cache: false
+                    }).done(function (db_res) {
+
+                        // display marker
+                        $('img#themarker').attr('src', '/data/' + db_res.selectedMarker + '.png');
+
+                        document.getElementById("generatorMsg").textContent = "Created! Right-click the marker to download and print.";
+
+                        // display db for testing purposes
+                        $.getJSON('/data/db.json', function (db) {
+                            console.log('Final DB: ');
+                            db.markers.forEach(function (marker) {
+                                console.log(marker);
+                            });
+                        });
+                    });
+                });
+
+            }
+            else {
+                console.log("No audio file received.")
+                document.getElementById("generatorMsg").textContent = "Please select a file";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
